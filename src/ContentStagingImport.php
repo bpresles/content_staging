@@ -166,8 +166,10 @@ class ContentStagingImport {
     $entity_type_id = $entity_type->id();
     $bundle_fields = $this->entityFieldManager->getFieldDefinitions($entity_type_id, $bundle_id);
 
-    // Unset uuid definitions.
-    unset($bundle_fields['uuid']);
+    // Unset uuid definitions for entities other than block_content.
+    if ($entity_type_id != 'block_content') {
+      unset($bundle_fields['uuid']);
+    }
 
     $config = [];
     foreach ($bundle_fields as $field_key => $bundle_field) {
